@@ -1,0 +1,45 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true"  CodeFile="Dashboard.aspx.cs" Inherits="_Dashboard" MasterPageFile="~/Admin/Dashboard.master"   %>
+
+<%@ Register src="~/Admin/menu.ascx" tagname="menu" tagprefix="uc1" %>
+
+<asp:Content ContentPlaceHolderID="MenuPlaceHolder"  ID="Menublk" runat="server">   
+<uc1:menu ID="menu" runat="server" />
+</asp:Content> 
+
+
+<asp:Content ContentPlaceHolderID="ContentPlaceHolder"  ID="Contentblk" runat="server">       
+ <div id="content">
+            
+            <div id="start">Dashboard</div>
+            
+            <div id="user">
+                <div id="name">
+                    <div id="firstname">Test</div>  
+                    <div id="lastname">test</div>
+                </div>
+                <div id="photo">
+                    <img src="img/User No-Frame.png" width="40" height="40" />
+                </div>
+            </div>
+            
+             
+             <div id="metro-sections-container" class="metro">
+                <div class="metro-sections" >
+                  <div class="metro-section" data-bind="foreach: tiles" >
+                        
+                      <div class="tile">
+                            <div class="tile-icon-large"> 
+                             <a data-bind="attr: { href: link }">                          
+                                <img data-bind="attr: { src: icon } " alt=""   /> 
+                                </a>                            
+                            </div>
+                            <span class="tile-label" data-bind="html: label"></span>
+                            <span class="tile-counter" data-bind="html: count"></span>
+                            
+                        </div>
+                    </div>              
+                </div>
+            </div>
+        </div>    
+
+</asp:Content> 

@@ -1,0 +1,126 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.SessionState; 
+
+/// <summary>
+/// Summary description for WweContext
+/// </summary>
+/// 
+namespace DataAccessLayer
+{
+    public class WebContext
+    {
+        public WebContext()
+        {
+            //
+            // TODO: Add constructor logic here
+            //
+        }
+
+        public struct ActiveSession
+        {
+            public bool IsActive;
+            public string FirstName;
+            public string LastName;
+            public string Email;
+            public string Username;
+            public int RoleID;
+            public DateTime CreateDate;
+            public DateTime LastUpdateDate;
+        }
+        public static void IntializeSession()
+        {
+            ActiveSession active = new ActiveSession();
+            active.IsActive = false;
+            active.FirstName = "";
+            active.LastName = "";
+            active.Email = "";
+            active.Username = "";
+            active.RoleID = 0;
+            active.CreateDate = Convert.ToDateTime("2000-01-01 00:00:00");
+            active.LastUpdateDate = Convert.ToDateTime("2000-01-01 00:00:00");
+            HttpContext.Current.Session["Ufcw_Userinfo"] = active;
+
+        }
+
+        public static void ClearSession()
+        {
+            HttpContext.Current.Session.Clear();
+        }
+
+        private static object GetFromSession(string key)
+        {
+            if (HttpContext.Current == null || HttpContext.Current.Session == null)
+            {
+                return null;
+            }
+            return HttpContext.Current.Session[key];
+        }
+
+
+        public static void UpdateInSession(string key, object value)
+        {
+            AccountRepository.Accountinfo UserRepository = (AccountRepository.Accountinfo)value;
+            ActiveSession active = new ActiveSession();
+            active.IsActive = true;
+            active.FirstName = UserRepository.FirstName;
+            active.LastName = UserRepository.LastName;
+            active.Email = UserRepository.Email;
+            active.Username = UserRepository.Username;
+            active.RoleID = UserRepository.RoleID;
+            active.CreateDate = UserRepository.CreateDate;
+            active.LastUpdateDate = UserRepository.LastUpdateDate;
+            HttpContext.Current.Session[key] = active;
+        }
+        public static void CheckSession(string key)
+        {
+            object UserSession = GetFromSession(key);
+
+            if (UserSession != null)
+            {
+                ActiveSession active = (ActiveSession)UserSession;
+                if (!active.IsActive)
+                {
+                    WebContext.ClearSession();
+                    Redirector.GoToExpirePage(); 
+                }
+            }
+        }       
+
+
+        public static string GetContentInSessionby(string Getby)
+        {
+            string content = "";
+            object UserSession = GetFromSession("Ufcw_Userinfo");
+
+            if (UserSession != null)
+            {
+                ActiveSession active = (ActiveSession)UserSession;
+                if (active.IsActive)
+                {
+                    switch (Getby)
+                    {
+                        case "Name":
+                            content = active.FirstName +" "+ active.LastName;           
+                            break;
+                        case "Email":
+                            content = active.Email;   
+                            break;
+                        case "Createdby":
+                            content = active.Username;  
+                            break; 
+                        case "RoleID":
+                            content = active.RoleID.ToString(); 
+                            break;
+
+                    }
+                }
+            }
+            return content; 
+        }
+
+
+    }
+}

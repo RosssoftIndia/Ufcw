@@ -1,0 +1,152 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Data;   
+
+/// <summary>
+/// Summary description for Connection
+/// </summary>
+/// 
+namespace DataAccessLayer
+{
+    public class Connection
+    {
+        public Connection()
+        {
+            //
+            // TODO: Add constructor logic here
+            //
+        }
+
+        public struct sp
+        {
+            public bool Isresult;
+            public string Error;
+            public int scope;
+        }
+
+        public static string DBConnectionString()
+        {
+          string strConn = ConfigurationManager.ConnectionStrings["UfcwConnectionString"].ConnectionString;   
+          return strConn;
+        }
+
+       public static DataSet GetDataSet(string strSQL)
+        {
+            SqlDataAdapter sdpPrd = new SqlDataAdapter(strSQL, DBConnectionString());
+            DataSet ds = new DataSet();
+            sdpPrd.Fill(ds);
+            return ds;
+        }
+       public static bool GetDataSet_withoutID(string strSQL)
+        {
+            bool result;
+            string query = strSQL;
+            SqlConnection conn = new SqlConnection(DBConnectionString());
+            conn.Open();
+            SqlCommand cmd = new SqlCommand();
+            cmd = new SqlCommand(query, conn);
+            int j = cmd.ExecuteNonQuery();
+            conn.Close();
+            if (j > 0)
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+
+            return result;
+        }
+       public static int GetDataSet_withID(string strSQL)
+        {
+            string query = strSQL;
+            SqlConnection conn = new SqlConnection(DBConnectionString());
+            conn.Open();
+            SqlCommand cmd = new SqlCommand();
+            cmd = new SqlCommand(query, conn);
+            cmd.ExecuteNonQuery();
+            cmd = new SqlCommand("SELECT @@IDENTITY", conn);
+            string appId = cmd.ExecuteScalar().ToString();
+            int nId = Convert.ToInt32(appId);
+            conn.Close();
+            return nId;
+        }
+       public static int GetDataSet_reader(string strSQL)
+        {
+            int id = 0;
+            string query = strSQL;
+            SqlConnection conn = new SqlConnection(DBConnectionString());
+            conn.Open();
+            SqlCommand cmd = new SqlCommand();
+            cmd = new SqlCommand(query, conn);
+            SqlDataReader rd = cmd.ExecuteReader();
+            rd.Read();
+
+            if (rd.HasRows)
+            {
+                id = Convert.ToInt32(rd["id"].ToString());
+            }
+            else
+            {
+                id = 0;
+            }
+            conn.Close();
+            return id;
+        }
+       public static DataSet GetMultipleDataset(string strSQL, DataSet ds, string tablename)
+        {
+            SqlDataAdapter sdpPrd = new SqlDataAdapter(strSQL, DBConnectionString());
+            sdpPrd.Fill(ds, tablename);
+            return ds;
+        }
+
+       public static void GetDataSet_sp(string Sp_Name)
+       {
+           ////Create a connection to the SQL Server; modify the connection string for your environment.
+           ////SqlConnection MyConnection = new SqlConnection("server=(local);database=pubs;Trusted_Connection=yes");
+           //SqlConnection MyConnection = new SqlConnection(DBConnectionString());
+
+           ////Create a DataAdapter, and then provide the name of the stored procedure.
+           //SqlDataAdapter MyDataAdapter = new SqlDataAdapter(Sp_Name, MyConnection);
+
+           ////Set the command type as StoredProcedure.
+           //MyDataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+           ////Create and add a parameter to Parameters collection for the stored procedure.
+           //MyDataAdapter.SelectCommand.Parameters.Add(new SqlParameter("@au_lname", SqlDbType.VarChar, 40));
+
+           ////Assign the search value to the parameter.
+           //MyDataAdapter.SelectCommand.Parameters["@au_lname"].Value = (txtLastName.Text).Trim();
+
+           ////Create and add an output parameter to the Parameters collection. 
+           //MyDataAdapter.SelectCommand.Parameters.Add(new SqlParameter("@RowCount", SqlDbType.Int, 4));
+
+           ////Set the direction for the parameter. This parameter returns the Rows that are returned.
+           //MyDataAdapter.SelectCommand.Parameters["@RowCount"].Direction = ParameterDirection.Output;
+
+           ////Create a new DataSet to hold the records.
+           //DataSet DS = new DataSet();
+
+           ////Fill the DataSet with the rows that are returned.
+           //MyDataAdapter.Fill(DS, "AuthorsByLastName");
+
+           ////Get the number of rows returned, and assign it to the Label control.
+           ////lblRowCount.Text = DS.Tables(0).Rows.Count().ToString() & " Rows Found!"
+           //lblRowCount.Text = MyDataAdapter.SelectCommand.Parameters[1].Value + " Rows Found!";
+
+           ////Set the data source for the DataGrid as the DataSet that holds the rows.
+           //GrdAuthors.DataSource = DS.Tables["AuthorsByLastName"].DefaultView;
+
+           ////NOTE: If you do not call this method, the DataGrid is not displayed!
+           //GrdAuthors.DataBind();
+
+           //MyDataAdapter.Dispose(); //Dispose the DataAdapter.
+           //MyConnection.Close(); //Close the connection.
+       }
+    }
+}

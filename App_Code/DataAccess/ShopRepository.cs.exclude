@@ -1,0 +1,802 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+using System.Data; 
+using System.Web.UI.WebControls;
+using System.Data.SqlClient;
+using Telerik.Web.UI;
+
+
+/// <summary>
+/// Summary description for AccountRepository
+/// </summary>
+/// 
+namespace DataAccessLayer
+{
+    //public class ShopRepository
+    //{
+        
+    //    public ShopRepository()
+    //    {
+    //        //
+    //        // TODO: Add constructor logic here
+    //        //
+          
+    //    }       
+
+
+
+    //#region Shops Table
+        
+    //public static DataSet GetShops(bool IsDisable)
+    //    {
+    //        string query = "SELECT * FROM dbo.Shops as a";
+    //        if (IsDisable)
+    //        {
+    //            query += " WHERE a.IsDisable=1 ";
+    //        }
+    //        else { query += " WHERE a.IsDisable=0 "; }
+
+    //        DataSet ds = new DataSet();
+    //        ds = Connection.GetDataSet(query);
+    //        return ds;
+    //    }
+          
+   
+    //#region dropDown
+
+    //#endregion
+    //#region common
+    //    //view and edit
+    //    public static bool SelectShop(RadNumericTextBox @ShopID, TextBox @Name, TextBox @Pri_Address, TextBox @Pri_City, TextBox @Pri_State, TextBox @Pri_Zip, TextBox @Pri_Zip_Plus4, TextBox @Sec_Address, TextBox @Sec_City
+    //, TextBox @Sec_State, TextBox @Sec_Zip, TextBox @Sec_Zip_Plus4, RadMaskedTextBox @Pri_Phone, RadMaskedTextBox @Pri_Fax, TextBox @Pri_Email, RadMaskedTextBox @Sec_Phone, RadMaskedTextBox @Sec_Fax, TextBox @Sec_Email
+    //, RadComboBox @DelegateID, RadDatePicker @OpenMonths, RadDatePicker @OLPD, RadDatePicker @OLPH, RadDatePicker @LPD, RadDatePicker @LPH, RadDatePicker @Contract_Start, RadDatePicker @Contract_End, string @RecordID)
+    //    {
+    //        bool Isvalid = false;
+    //        string query = "SELECT " +
+    //                  "a.[RecordID],a.[ShopID],a.[Name],b.[Pri_Address],b.[Pri_City],b.[Pri_State],b.[Pri_Zip],b.[Pri_Zip_Plus4] " +
+    //                  ",b.[Sec_Address],b.[Sec_City],b.[Sec_State],b.[Sec_Zip],b.[Sec_Zip_Plus4] " +
+    //                  ",b.[Pri_Phone],b.[Pri_Fax],b.[Pri_Email],b.[Sec_Phone],b.[Sec_Fax],b.[Sec_Email] " +
+    //                  ",d.[RecordID] as DelegateID,c.[OpenMonths],c.[OLPD],c.[OLPH],c.[LPD],c.[LPH],c.[Contract_Start],c.[Contract_End] " +
+    //                  "FROM dbo.Shops as a inner join " +
+    //                          "dbo.Shops_Address as b on b.ReferenceID = a.RecordID inner join " +
+    //                          "dbo.Shops_Delegate as c on c.ReferenceID = a.RecordID inner join dbo.Delegate as d on d.RecordID = c.DelegateID";
+
+    //        query += " WHERE a.[RecordID]=" + RecordID;
+
+
+    //        DataSet ds = Connection.GetDataSet(query);
+    //        if (ds.Tables[0].Rows.Count > 0)
+    //        {
+    //            @ShopID.Text = ds.Tables[0].Rows[0]["ShopID"].ToString();
+    //            @Name.Text = ds.Tables[0].Rows[0]["Name"].ToString();
+    //            @Pri_Address.Text = ds.Tables[0].Rows[0]["Pri_Address"].ToString();
+    //            @Pri_City.Text = ds.Tables[0].Rows[0]["Pri_City"].ToString();
+    //            @Pri_State.Text = ds.Tables[0].Rows[0]["Pri_State"].ToString();
+    //            @Pri_Zip.Text = ds.Tables[0].Rows[0]["Pri_Zip"].ToString();
+    //            @Pri_Zip_Plus4.Text = ds.Tables[0].Rows[0]["Pri_Zip_Plus4"].ToString();
+    //            @Sec_Address.Text = ds.Tables[0].Rows[0]["Sec_Address"].ToString();
+    //            @Sec_City.Text = ds.Tables[0].Rows[0]["Sec_City"].ToString();
+    //            @Sec_State.Text = ds.Tables[0].Rows[0]["Sec_State"].ToString();
+    //            @Sec_Zip.Text = ds.Tables[0].Rows[0]["Sec_Zip"].ToString();
+    //            @Sec_Zip_Plus4.Text = ds.Tables[0].Rows[0]["Sec_Zip_Plus4"].ToString();
+    //            @Pri_Phone.Text = ds.Tables[0].Rows[0]["Pri_Phone"].ToString();
+    //            @Pri_Fax.Text = ds.Tables[0].Rows[0]["Pri_Fax"].ToString();
+    //            @Pri_Email.Text = ds.Tables[0].Rows[0]["Pri_Email"].ToString();
+    //            @Sec_Phone.Text = ds.Tables[0].Rows[0]["Sec_Phone"].ToString();
+    //            @Sec_Fax.Text = ds.Tables[0].Rows[0]["Sec_Fax"].ToString();
+    //            @Sec_Email.Text = ds.Tables[0].Rows[0]["Sec_Email"].ToString();
+    //            DelegateID.SelectedValue = ds.Tables[0].Rows[0]["DelegateID"].ToString();
+    //            if (ds.Tables[0].Rows[0]["OpenMonths"].ToString() != null && ds.Tables[0].Rows[0]["OpenMonths"].ToString() != "")
+    //            {
+    //                @OpenMonths.SelectedDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["OpenMonths"].ToString());
+    //            }
+    //            if (ds.Tables[0].Rows[0]["OLPD"].ToString() != null && ds.Tables[0].Rows[0]["OLPD"].ToString() != "")
+    //            {
+    //                @OLPD.SelectedDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["OLPD"].ToString());
+    //            }
+    //            if (ds.Tables[0].Rows[0]["OLPH"].ToString() != null && ds.Tables[0].Rows[0]["OLPH"].ToString() != "")
+    //            {
+    //                @OLPH.SelectedDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["OLPH"].ToString());
+    //            }
+    //            if (ds.Tables[0].Rows[0]["LPD"].ToString() != null && ds.Tables[0].Rows[0]["LPD"].ToString() != "")
+    //            {
+    //                @LPD.SelectedDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["LPD"].ToString());
+    //            }
+    //            if (ds.Tables[0].Rows[0]["LPH"].ToString() != null && ds.Tables[0].Rows[0]["LPH"].ToString() != "")
+    //            {
+    //                @LPH.SelectedDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["LPH"].ToString());
+    //            }
+    //            if (ds.Tables[0].Rows[0]["Contract_Start"].ToString() != null && ds.Tables[0].Rows[0]["Contract_Start"].ToString() != "")
+    //            {
+    //                @Contract_Start.SelectedDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["Contract_Start"].ToString());
+    //            }
+    //            if (ds.Tables[0].Rows[0]["Contract_End"].ToString() != null && ds.Tables[0].Rows[0]["Contract_End"].ToString() != "")
+    //            {
+    //                @Contract_End.SelectedDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["Contract_End"].ToString());
+    //            }
+    //            Isvalid = true;
+    //        }
+    //        return Isvalid;
+    //    }
+    //#endregion
+
+    //#region Browse
+    //public static void BrowseShop(RadGrid grid, bool IsDisable)
+    //{
+    //    string query = "SELECT " +
+    //         "a.[RecordID],a.[ShopID],a.[Name],b.[Pri_Address],b.[Pri_City],b.[Pri_State],b.[Pri_Zip],b.[Pri_Zip_Plus4] " +
+    //         ",b.[Sec_Address],b.[Sec_City],b.[Sec_State],b.[Sec_Zip],b.[Sec_Zip_Plus4] " +
+    //         ",b.[Pri_Phone],b.[Pri_Fax],b.[Pri_Email],b.[Sec_Phone],b.[Sec_Fax],b.[Sec_Email] " +
+    //         ",d.[Name] as Delegate,convert(varchar(12),c.[OpenMonths],101) as OpenMonths ,convert(varchar(12),c.[OpenMonths],101) as OLPD,convert(varchar(12),c.[OLPH],101) as OLPH, convert(varchar(12),c.[LPD],101) as LPD, convert(varchar(12),c.[LPH],101) as LPH, convert(varchar(12),c.[Contract_Start],101) as Contract_Start, convert(varchar(12),c.[Contract_End],101) as Contract_End " +
+    //         "FROM dbo.Shops as a inner join " +
+    //                 "dbo.Shops_Address as b on b.ReferenceID = a.RecordID inner join " +
+    //                 "dbo.Shops_Delegate as c on c.ReferenceID = a.RecordID inner join dbo.Delegate as d on d.RecordID = c.DelegateID";
+    //    if (IsDisable)
+    //    {
+    //        query += " WHERE a.IsDisable=1 ";
+    //    }
+    //    else { query += " WHERE a.IsDisable=0 "; }
+
+    //    DataSet ds = Connection.GetDataSet(query);
+    //    grid.DataSource = ds;
+    //    // grid.DataBind();  
+
+    //}
+  
+    //#endregion
+    //#region view
+    //public static void GetShopContacts(RadGrid grid, string RecordID)
+    //{
+    //    string query = "SELECT a.[RecordID],a.[ReferenceID],a.[Name],a.[Type],a.[Phone],a.[Fax],a.[Mobile],a.[Email] FROM dbo.Shops_Contact as a WHERE a.ReferenceID=" + RecordID + " order by a.[RecordID]";
+    //    DataSet ds = Connection.GetDataSet(query);
+    //    grid.DataSource = ds;
+    //    //grid.DataBind();
+    //}
+    //public static void GetShopFee(RadGrid grid, string RecordID)
+    //{
+    //    string query = "SELECT [RecordID],[ReferenceID],[Init_FullTime],[Init_PartTime],[Due_FullTime],[Due_PartTime],convert(varchar(12),[Effective_Date],101) as Effective_Date FROM dbo.Shops_FeeStructure WHERE ReferenceID=" + RecordID + " order by [RecordID]";
+    //    DataSet ds = Connection.GetDataSet(query);
+    //    grid.DataSource = ds;
+    //    //grid.DataBind();  
+
+    //}
+    //#endregion
+    //#region Edit
+    //#region Fee
+    //public static bool InsertFee(string @ReferenceID, decimal Init_FullTime, decimal @Init_PartTime, decimal @Due_FullTime, decimal @Due_PartTime, string @Effective_Date, string @CreatedBy)
+    //{
+    //    bool sp = false;
+    //    SqlConnection con = new SqlConnection(Connection.DBConnectionString());
+    //    con.Open();
+    //    SqlCommand cmd = new SqlCommand("Sp_ShopFeeService", con);
+    //    cmd.CommandType = CommandType.StoredProcedure;
+    //    cmd.Parameters.Add("@Mode", SqlDbType.NVarChar, 30).Value = "Insert";
+    //    cmd.Parameters.Add("@ReferenceID", SqlDbType.Int).Value = @ReferenceID;
+    //    cmd.Parameters.Add("@Init_FullTime", SqlDbType.Decimal).Value = @Init_FullTime;
+    //    cmd.Parameters.Add("@Init_PartTime", SqlDbType.Decimal).Value = @Init_PartTime;
+    //    cmd.Parameters.Add("@Due_FullTime", SqlDbType.Decimal).Value = @Due_FullTime;
+    //    cmd.Parameters.Add("@Due_PartTime", SqlDbType.Decimal).Value = @Due_PartTime;
+    //    cmd.Parameters.Add("@Effective_Date", SqlDbType.SmallDateTime).Value = @Effective_Date;
+    //    cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 30).Value = @CreatedBy;
+
+    //    //Last Inserted or Updated Record
+    //    SqlParameter scope = new SqlParameter("@scope", SqlDbType.Int);
+    //    scope.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(scope);
+
+    //    //Additional:action result:'successful','Error'
+    //    SqlParameter result = new SqlParameter("@output", SqlDbType.VarChar, 50);
+    //    result.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(result);
+
+    //    //Actual error encountered
+    //    SqlParameter errormsg = new SqlParameter("@error_msg", SqlDbType.VarChar, -1);
+    //    errormsg.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(errormsg);
+
+    //    cmd.ExecuteNonQuery();
+    //    con.Close();
+    //    if (result.Value.ToString() == "successful")
+    //    {
+    //        sp = true;
+    //    }
+    //    else
+    //    {
+    //        sp = false;
+    //    }
+
+    //    return sp;
+
+    //}
+    //public static bool UpdateFee(string @ReferenceID, decimal Init_FullTime, decimal @Init_PartTime, decimal @Due_FullTime, decimal @Due_PartTime, string @Effective_Date, string @CreatedBy)
+    //{
+    //    bool sp = false;
+    //    SqlConnection con = new SqlConnection(Connection.DBConnectionString());
+    //    con.Open();
+    //    SqlCommand cmd = new SqlCommand("Sp_ShopFeeService", con);
+    //    cmd.CommandType = CommandType.StoredProcedure;
+    //    cmd.Parameters.Add("@Mode", SqlDbType.NVarChar, 30).Value = "Update";
+    //    cmd.Parameters.Add("@ReferenceID", SqlDbType.Int).Value = @ReferenceID;
+    //    cmd.Parameters.Add("@Init_FullTime", SqlDbType.Decimal).Value = @Init_FullTime;
+    //    cmd.Parameters.Add("@Init_PartTime", SqlDbType.Decimal).Value = @Init_PartTime;
+    //    cmd.Parameters.Add("@Due_FullTime", SqlDbType.Decimal).Value = @Due_FullTime;
+    //    cmd.Parameters.Add("@Due_PartTime", SqlDbType.Decimal).Value = @Due_PartTime;
+    //    cmd.Parameters.Add("@Effective_Date", SqlDbType.SmallDateTime).Value = @Effective_Date;
+    //    cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 30).Value = @CreatedBy;
+
+    //    //Last Inserted or Updated Record
+    //    SqlParameter scope = new SqlParameter("@scope", SqlDbType.Int);
+    //    scope.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(scope);
+
+    //    //Additional:action result:'successful','Error'
+    //    SqlParameter result = new SqlParameter("@output", SqlDbType.VarChar, 50);
+    //    result.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(result);
+
+    //    //Actual error encountered
+    //    SqlParameter errormsg = new SqlParameter("@error_msg", SqlDbType.VarChar, -1);
+    //    errormsg.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(errormsg);
+
+    //    cmd.ExecuteNonQuery();
+    //    con.Close();
+    //    if (result.Value.ToString() == "successful")
+    //    {
+    //        sp = true;
+    //    }
+    //    else
+    //    {
+    //        sp = false;
+    //    }
+
+    //    return sp;
+
+    //}
+    //private static string Isnull(string var)
+    //{
+    //    string result = "";
+    //    if (string.IsNullOrEmpty(var))
+    //    {
+    //        result = null;
+    //    }
+    //    else { result = var; }
+
+    //    return result;
+    //}
+    //public static bool DeleteFee(string @ReferenceID, string @CreatedBy)
+    //{
+    //    bool sp = false;
+    //    SqlConnection con = new SqlConnection(Connection.DBConnectionString());
+    //    con.Open();
+    //    SqlCommand cmd = new SqlCommand("Sp_ShopFeeService", con);
+    //    cmd.CommandType = CommandType.StoredProcedure;
+    //    cmd.Parameters.Add("@Mode", SqlDbType.NVarChar, 30).Value = "Delete";
+    //    cmd.Parameters.Add("@ReferenceID", SqlDbType.Int).Value = @ReferenceID;
+    //    cmd.Parameters.Add("@Init_FullTime", SqlDbType.Decimal).Value = null;
+    //    cmd.Parameters.Add("@Init_PartTime", SqlDbType.Decimal).Value = null;
+    //    cmd.Parameters.Add("@Due_FullTime", SqlDbType.Decimal).Value = null;
+    //    cmd.Parameters.Add("@Due_PartTime", SqlDbType.Decimal).Value = null;
+    //    cmd.Parameters.Add("@Effective_Date", SqlDbType.SmallDateTime).Value = null;
+    //    cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 30).Value = @CreatedBy;
+
+    //    //Last Inserted or Updated Record
+    //    SqlParameter scope = new SqlParameter("@scope", SqlDbType.Int);
+    //    scope.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(scope);
+
+    //    //Additional:action result:'successful','Error'
+    //    SqlParameter result = new SqlParameter("@output", SqlDbType.VarChar, 50);
+    //    result.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(result);
+
+    //    //Actual error encountered
+    //    SqlParameter errormsg = new SqlParameter("@error_msg", SqlDbType.VarChar, -1);
+    //    errormsg.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(errormsg);
+
+    //    cmd.ExecuteNonQuery();
+    //    con.Close();
+    //    if (result.Value.ToString() == "successful")
+    //    {
+    //        sp = true;
+    //    }
+    //    else
+    //    {
+    //        sp = false;
+    //    }
+
+    //    return sp;
+
+    //}
+    //#endregion
+
+    //#region Contact
+    //public static bool InsertContact(string @ReferenceID, string @Name, string @Type, string @Phone, string @Fax, string @Mobile, string @Email,  string @CreatedBy)
+    //{
+    //    bool sp = false;
+    //    SqlConnection con = new SqlConnection(Connection.DBConnectionString());
+    //    con.Open();
+    //    SqlCommand cmd = new SqlCommand("Sp_ShopContactService", con);
+    //    cmd.CommandType = CommandType.StoredProcedure;
+    //    cmd.Parameters.Add("@Mode", SqlDbType.NVarChar, 30).Value = "Insert";
+    //    cmd.Parameters.Add("@ReferenceID", SqlDbType.Int).Value = @ReferenceID;
+    //    cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 70).Value = @Name;
+    //    cmd.Parameters.Add("@Type", SqlDbType.Int).Value = @Type;
+    //    cmd.Parameters.Add("@Phone", SqlDbType.NVarChar, 15).Value = @Phone;
+    //    cmd.Parameters.Add("@Fax", SqlDbType.NVarChar, 15).Value = @Fax;
+    //    cmd.Parameters.Add("@Mobile", SqlDbType.NVarChar, 15).Value = @Mobile;
+    //    cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 150).Value = @Email;
+    //    cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 30).Value = @CreatedBy;  	  
+
+    //    //Last Inserted or Updated Record
+    //    SqlParameter scope = new SqlParameter("@scope", SqlDbType.Int);
+    //    scope.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(scope);
+
+    //    //Additional:action result:'successful','Error'
+    //    SqlParameter result = new SqlParameter("@output", SqlDbType.VarChar, 50);
+    //    result.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(result);
+
+    //    //Actual error encountered
+    //    SqlParameter errormsg = new SqlParameter("@error_msg", SqlDbType.VarChar, -1);
+    //    errormsg.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(errormsg);
+
+    //    cmd.ExecuteNonQuery();
+    //    con.Close();
+    //    if (result.Value.ToString() == "successful")
+    //    {
+    //        sp = true;
+    //    }
+    //    else
+    //    {
+    //        sp = false;
+    //    }
+
+    //    return sp;
+
+    //}
+    //public static bool UpdateContact(string @ReferenceID, string @Name, string @Type, string @Phone, string @Fax, string @Mobile, string @Email, string @CreatedBy)
+    //{
+    //    bool sp = false;
+    //    SqlConnection con = new SqlConnection(Connection.DBConnectionString());
+    //    con.Open();
+    //    SqlCommand cmd = new SqlCommand("Sp_ShopContactService", con);
+    //    cmd.CommandType = CommandType.StoredProcedure;
+    //    cmd.Parameters.Add("@Mode", SqlDbType.NVarChar, 30).Value = "Update";
+    //    cmd.Parameters.Add("@ReferenceID", SqlDbType.Int).Value = @ReferenceID;
+    //    cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 70).Value = @Name;
+    //    cmd.Parameters.Add("@Type", SqlDbType.Int).Value = @Type;
+    //    cmd.Parameters.Add("@Phone", SqlDbType.NVarChar, 15).Value = @Phone;
+    //    cmd.Parameters.Add("@Fax", SqlDbType.NVarChar, 15).Value = @Fax;
+    //    cmd.Parameters.Add("@Mobile", SqlDbType.NVarChar, 15).Value = @Mobile;
+    //    cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 150).Value = @Email;
+    //    cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 30).Value = @CreatedBy;  
+
+    //    //Last Inserted or Updated Record
+    //    SqlParameter scope = new SqlParameter("@scope", SqlDbType.Int);
+    //    scope.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(scope);
+
+    //    //Additional:action result:'successful','Error'
+    //    SqlParameter result = new SqlParameter("@output", SqlDbType.VarChar, 50);
+    //    result.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(result);
+
+    //    //Actual error encountered
+    //    SqlParameter errormsg = new SqlParameter("@error_msg", SqlDbType.VarChar, -1);
+    //    errormsg.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(errormsg);
+
+    //    cmd.ExecuteNonQuery();
+    //    con.Close();
+    //    if (result.Value.ToString() == "successful")
+    //    {
+    //        sp = true;
+    //    }
+    //    else
+    //    {
+    //        sp = false;
+    //    }
+
+    //    return sp;
+
+    //}
+    //public static bool DeleteContact(string @ReferenceID, string @CreatedBy)
+    //{
+    //    bool sp = false;
+    //    SqlConnection con = new SqlConnection(Connection.DBConnectionString());
+    //    con.Open();
+    //    SqlCommand cmd = new SqlCommand("Sp_ShopContactService", con);
+    //    cmd.CommandType = CommandType.StoredProcedure;
+    //    cmd.Parameters.Add("@Mode", SqlDbType.NVarChar, 30).Value = "Delete";
+    //    cmd.Parameters.Add("@ReferenceID", SqlDbType.Int).Value = @ReferenceID;
+    //    cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 70).Value = null;
+    //    cmd.Parameters.Add("@Type", SqlDbType.Int).Value = null;
+    //    cmd.Parameters.Add("@Phone", SqlDbType.NVarChar, 15).Value = null;
+    //    cmd.Parameters.Add("@Fax", SqlDbType.NVarChar, 15).Value = null;
+    //    cmd.Parameters.Add("@Mobile", SqlDbType.NVarChar, 15).Value = null;
+    //    cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 150).Value = null;
+    //    cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 30).Value = @CreatedBy;  
+
+    //    //Last Inserted or Updated Record
+    //    SqlParameter scope = new SqlParameter("@scope", SqlDbType.Int);
+    //    scope.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(scope);
+
+    //    //Additional:action result:'successful','Error'
+    //    SqlParameter result = new SqlParameter("@output", SqlDbType.VarChar, 50);
+    //    result.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(result);
+
+    //    //Actual error encountered
+    //    SqlParameter errormsg = new SqlParameter("@error_msg", SqlDbType.VarChar, -1);
+    //    errormsg.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(errormsg);
+
+    //    cmd.ExecuteNonQuery();
+    //    con.Close();
+    //    if (result.Value.ToString() == "successful")
+    //    {
+    //        sp = true;
+    //    }
+    //    else
+    //    {
+    //        sp = false;
+    //    }
+
+    //    return sp;
+
+    //}
+    //#endregion
+
+    //public static bool UpdateShop(string @RecordID,string @ShopID, string @Name, string @Pri_Address, string @Pri_City, string @Pri_State, string @Pri_Zip, string @Pri_Zip_Plus4, string @Sec_Address, string @Sec_City
+    //      , string @Sec_State, string @Sec_Zip, string @Sec_Zip_Plus4, string @Pri_Phone, string @Pri_Fax, string @Pri_Email, string @Sec_Phone, string @Sec_Fax, string @Sec_Email, string @CreatedBy
+    //      , int @DelegateID, string @OpenMonths, string @OLPD, string @OLPH, String @LPD, string @LPH, string @Contract_Start, string @Contract_End)
+    //{
+    //    bool sp = false;
+    //    SqlConnection con = new SqlConnection(Connection.DBConnectionString());
+    //    con.Open();
+    //    SqlCommand cmd = new SqlCommand("Sp_ShopService", con);
+    //    cmd.CommandType = CommandType.StoredProcedure;
+    //    cmd.Parameters.Add("@Mode", SqlDbType.NVarChar, 30).Value = "Update";
+    //    cmd.Parameters.Add("@RecordID", SqlDbType.Int).Value = Isnull(@RecordID);
+    //    cmd.Parameters.Add("@ShopID", SqlDbType.Int).Value = Isnull(@ShopID);
+    //    cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 500).Value = @Name;
+    //    cmd.Parameters.Add("@Pri_Address", SqlDbType.NVarChar, -1).Value = @Pri_Address;
+    //    cmd.Parameters.Add("@Pri_City", SqlDbType.NVarChar, 30).Value = @Pri_City;
+    //    cmd.Parameters.Add("@Pri_State", SqlDbType.NVarChar, 15).Value = @Pri_State;
+    //    cmd.Parameters.Add("@Pri_Zip", SqlDbType.NVarChar, 15).Value = @Pri_Zip;
+    //    cmd.Parameters.Add("@Pri_Zip_Plus4", SqlDbType.NVarChar, 15).Value = @Pri_Zip_Plus4;
+    //    cmd.Parameters.Add("@Sec_Address", SqlDbType.NVarChar, -1).Value = @Sec_Address;
+    //    cmd.Parameters.Add("@Sec_City ", SqlDbType.NVarChar, 30).Value = @Sec_City;
+    //    cmd.Parameters.Add("@Sec_State", SqlDbType.NVarChar, 15).Value = @Sec_State;
+    //    cmd.Parameters.Add("@Sec_Zip", SqlDbType.NVarChar, 15).Value = @Sec_Zip;
+    //    cmd.Parameters.Add("@Sec_Zip_Plus4 ", SqlDbType.NVarChar, 15).Value = @Sec_Zip_Plus4;
+    //    cmd.Parameters.Add("@Pri_Phone", SqlDbType.NVarChar, 15).Value = @Pri_Phone;
+    //    cmd.Parameters.Add("@Pri_Fax", SqlDbType.NVarChar, 15).Value = @Pri_Fax;
+    //    cmd.Parameters.Add("@Pri_Email", SqlDbType.NVarChar, 150).Value = @Pri_Email;
+    //    cmd.Parameters.Add("@Sec_Phone", SqlDbType.NVarChar, 15).Value = @Sec_Phone;
+    //    cmd.Parameters.Add("@Sec_Fax", SqlDbType.NVarChar, 15).Value = @Sec_Fax;
+    //    cmd.Parameters.Add("@Sec_Email", SqlDbType.NVarChar, 150).Value = @Sec_Email;
+    //    cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 30).Value = @CreatedBy;       
+    //    cmd.Parameters.Add("@DelegateID", SqlDbType.Int).Value = @DelegateID;
+    //    cmd.Parameters.Add("@OpenMonths", SqlDbType.SmallDateTime).Value = @OpenMonths;
+    //    cmd.Parameters.Add("@OLPD", SqlDbType.SmallDateTime).Value = @OLPD;
+    //    cmd.Parameters.Add("@OLPH", SqlDbType.SmallDateTime).Value = @OLPH;
+    //    cmd.Parameters.Add("@LPD", SqlDbType.SmallDateTime).Value = @LPD;
+    //    cmd.Parameters.Add("@LPH", SqlDbType.SmallDateTime).Value = @LPH;
+    //    cmd.Parameters.Add("@Contract_Start", SqlDbType.SmallDateTime).Value = @Contract_Start;
+    //    cmd.Parameters.Add("@Contract_End", SqlDbType.SmallDateTime).Value = @Contract_End;
+
+
+    //    //Last Inserted or Updated Record
+    //    SqlParameter scope = new SqlParameter("@scope", SqlDbType.Int);
+    //    scope.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(scope);
+
+    //    //Additional:action result:'successful','Error'
+    //    SqlParameter result = new SqlParameter("@output", SqlDbType.VarChar, 50);
+    //    result.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(result);
+
+    //    //Actual error encountered
+    //    SqlParameter errormsg = new SqlParameter("@error_msg", SqlDbType.VarChar, -1);
+    //    errormsg.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(errormsg);
+
+    //    cmd.ExecuteNonQuery();
+    //    con.Close();
+    //    if (result.Value.ToString() == "successful")
+    //    {
+    //        sp = true;
+    //    }
+    //    else
+    //    {
+    //        sp = false;
+    //    }
+
+    //    return sp;
+    //}
+ 
+    //#endregion
+    //#region Add
+    //public static bool CreateShop(string @ShopID, string @Name, string @Pri_Address, string @Pri_City, string @Pri_State, string @Pri_Zip, string @Pri_Zip_Plus4, string @Sec_Address, string @Sec_City
+    //   , string @Sec_State, string @Sec_Zip, string @Sec_Zip_Plus4, string @Pri_Phone, string @Pri_Fax, string @Pri_Email, string @Sec_Phone, string @Sec_Fax, string @Sec_Email, string @CreatedBy
+    //   , int @DelegateID, string @OpenMonths, string @OLPD, string @OLPH, String @LPD, string @LPH, string @Contract_Start, string @Contract_End)
+    //{
+    //    bool sp = false;
+    //    SqlConnection con = new SqlConnection(Connection.DBConnectionString());
+    //    con.Open();
+    //    SqlCommand cmd = new SqlCommand("Sp_ShopService", con);
+    //    cmd.CommandType = CommandType.StoredProcedure;
+    //    cmd.Parameters.Add("@Mode", SqlDbType.NVarChar, 30).Value = "Insert";
+    //    cmd.Parameters.Add("@RecordID", SqlDbType.Int).Value = null;
+    //    cmd.Parameters.Add("@ShopID", SqlDbType.Int).Value = Isnull(@ShopID);
+    //    cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 500).Value = @Name;
+    //    cmd.Parameters.Add("@Pri_Address", SqlDbType.NVarChar, -1).Value = @Pri_Address;
+    //    cmd.Parameters.Add("@Pri_City", SqlDbType.NVarChar, 30).Value = @Pri_City;
+    //    cmd.Parameters.Add("@Pri_State", SqlDbType.NVarChar, 15).Value = @Pri_State;
+    //    cmd.Parameters.Add("@Pri_Zip", SqlDbType.NVarChar, 15).Value = @Pri_Zip;
+    //    cmd.Parameters.Add("@Pri_Zip_Plus4", SqlDbType.NVarChar, 15).Value = @Pri_Zip_Plus4;
+    //    cmd.Parameters.Add("@Sec_Address", SqlDbType.NVarChar, -1).Value = @Sec_Address;
+    //    cmd.Parameters.Add("@Sec_City ", SqlDbType.NVarChar, 30).Value = @Sec_City;
+    //    cmd.Parameters.Add("@Sec_State", SqlDbType.NVarChar, 15).Value = @Sec_State;
+    //    cmd.Parameters.Add("@Sec_Zip", SqlDbType.NVarChar, 15).Value = @Sec_Zip;
+    //    cmd.Parameters.Add("@Sec_Zip_Plus4 ", SqlDbType.NVarChar, 15).Value = @Sec_Zip_Plus4;
+    //    cmd.Parameters.Add("@Pri_Phone", SqlDbType.NVarChar, 15).Value = @Pri_Phone;
+    //    cmd.Parameters.Add("@Pri_Fax", SqlDbType.NVarChar, 15).Value = @Pri_Fax;
+    //    cmd.Parameters.Add("@Pri_Email", SqlDbType.NVarChar, 150).Value = @Pri_Email;
+    //    cmd.Parameters.Add("@Sec_Phone", SqlDbType.NVarChar, 15).Value = @Sec_Phone;
+    //    cmd.Parameters.Add("@Sec_Fax", SqlDbType.NVarChar, 15).Value = @Sec_Fax;
+    //    cmd.Parameters.Add("@Sec_Email", SqlDbType.NVarChar, 150).Value = @Sec_Email;
+    //    cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 30).Value = @CreatedBy;        
+    //    cmd.Parameters.Add("@DelegateID", SqlDbType.Int).Value = @DelegateID;
+    //    cmd.Parameters.Add("@OpenMonths", SqlDbType.SmallDateTime).Value = @OpenMonths;
+    //    cmd.Parameters.Add("@OLPD", SqlDbType.SmallDateTime).Value = @OLPD;
+    //    cmd.Parameters.Add("@OLPH", SqlDbType.SmallDateTime).Value = @OLPH;
+    //    cmd.Parameters.Add("@LPD", SqlDbType.SmallDateTime).Value = @LPD;
+    //    cmd.Parameters.Add("@LPH", SqlDbType.SmallDateTime).Value = @LPH;
+    //    cmd.Parameters.Add("@Contract_Start", SqlDbType.SmallDateTime).Value = @Contract_Start;
+    //    cmd.Parameters.Add("@Contract_End", SqlDbType.SmallDateTime).Value = @Contract_End;
+
+
+    //    //Last Inserted or Updated Record
+    //    SqlParameter scope = new SqlParameter("@scope", SqlDbType.Int);
+    //    scope.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(scope);
+
+    //    //Additional:action result:'successful','Error'
+    //    SqlParameter result = new SqlParameter("@output", SqlDbType.VarChar, 50);
+    //    result.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(result);
+
+    //    //Actual error encountered
+    //    SqlParameter errormsg = new SqlParameter("@error_msg", SqlDbType.VarChar, -1);
+    //    errormsg.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(errormsg);
+
+    //    cmd.ExecuteNonQuery();
+    //    con.Close();
+    //    if (result.Value.ToString() == "successful")
+    //    {
+    //        sp = true;
+    //    }
+    //    else
+    //    {
+    //        sp = false;
+    //    }
+       
+
+    //    return sp;
+    //}
+ 
+    //#endregion
+
+    //#region Enable & Disable
+    //public static bool DisableShop(string @RecordID, string @CreatedBy)
+    //{
+    //    bool sp = false;
+    //    SqlConnection con = new SqlConnection(Connection.DBConnectionString());
+    //    con.Open();
+    //    SqlCommand cmd = new SqlCommand("Sp_ShopService", con);
+    //    cmd.CommandType = CommandType.StoredProcedure;
+    //    cmd.Parameters.Add("@Mode", SqlDbType.NVarChar, 30).Value = "Disable";
+    //    cmd.Parameters.Add("@RecordID", SqlDbType.Int).Value = @RecordID;
+    //    cmd.Parameters.Add("@ShopID", SqlDbType.Int).Value = null;
+    //    cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 500).Value = null;
+    //    cmd.Parameters.Add("@Pri_Address", SqlDbType.NVarChar, -1).Value = null;
+    //    cmd.Parameters.Add("@Pri_City", SqlDbType.NVarChar, 30).Value = null;
+    //    cmd.Parameters.Add("@Pri_State", SqlDbType.NVarChar, 15).Value = null;
+    //    cmd.Parameters.Add("@Pri_Zip", SqlDbType.NVarChar, 15).Value = null;
+    //    cmd.Parameters.Add("@Pri_Zip_Plus4", SqlDbType.NVarChar, 15).Value = null;
+    //    cmd.Parameters.Add("@Sec_Address", SqlDbType.NVarChar, -1).Value = null;
+    //    cmd.Parameters.Add("@Sec_City ", SqlDbType.NVarChar, 30).Value = null;
+    //    cmd.Parameters.Add("@Sec_State", SqlDbType.NVarChar, 15).Value = null;
+    //    cmd.Parameters.Add("@Sec_Zip", SqlDbType.NVarChar, 15).Value = null;
+    //    cmd.Parameters.Add("@Sec_Zip_Plus4 ", SqlDbType.NVarChar, 15).Value = null;
+    //    cmd.Parameters.Add("@Pri_Phone", SqlDbType.NVarChar, 15).Value = null;
+    //    cmd.Parameters.Add("@Pri_Fax", SqlDbType.NVarChar, 15).Value = null;
+    //    cmd.Parameters.Add("@Pri_Email", SqlDbType.NVarChar, 150).Value = null;
+    //    cmd.Parameters.Add("@Sec_Phone", SqlDbType.NVarChar, 15).Value = null;
+    //    cmd.Parameters.Add("@Sec_Fax", SqlDbType.NVarChar, 15).Value = null;
+    //    cmd.Parameters.Add("@Sec_Email", SqlDbType.NVarChar, 150).Value = null;
+    //    cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 30).Value = @CreatedBy;       
+    //    cmd.Parameters.Add("@DelegateID", SqlDbType.Int).Value = null;
+    //    cmd.Parameters.Add("@OpenMonths", SqlDbType.SmallDateTime).Value = null;
+    //    cmd.Parameters.Add("@OLPD", SqlDbType.SmallDateTime).Value = null;
+    //    cmd.Parameters.Add("@OLPH", SqlDbType.SmallDateTime).Value = null;
+    //    cmd.Parameters.Add("@LPD", SqlDbType.SmallDateTime).Value = null;
+    //    cmd.Parameters.Add("@LPH", SqlDbType.SmallDateTime).Value = null;
+    //    cmd.Parameters.Add("@Contract_Start", SqlDbType.SmallDateTime).Value = null;
+    //    cmd.Parameters.Add("@Contract_End", SqlDbType.SmallDateTime).Value = null;
+
+
+    //    //Last Inserted or Updated Record
+    //    SqlParameter scope = new SqlParameter("@scope", SqlDbType.Int);
+    //    scope.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(scope);
+
+    //    //Additional:action result:'successful','Error'
+    //    SqlParameter result = new SqlParameter("@output", SqlDbType.VarChar, 50);
+    //    result.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(result);
+
+    //    //Actual error encountered
+    //    SqlParameter errormsg = new SqlParameter("@error_msg", SqlDbType.VarChar, -1);
+    //    errormsg.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(errormsg);
+
+    //    cmd.ExecuteNonQuery();
+    //    con.Close();
+    //    if (result.Value.ToString() == "successful")
+    //    {
+    //        sp = true;
+    //    }
+    //    else
+    //    {
+    //        sp = false;
+    //    }
+
+    //    return sp;
+    //}
+ 
+    //#endregion
+
+
+
+    //#endregion
+
+    //#region Delegate Table
+    //public static void GetDelegate(RadComboBox option)
+    //{
+        
+    //    string query = "SELECT * FROM [Delegate] where IsDisable=0";
+    //    DataSet ds = new DataSet();
+    //    ds = Connection.GetDataSet(query);
+    //    option.DataSource = ds;
+    //    option.DataTextField = "Name";
+    //    option.DataValueField = "RecordID";
+    //    option.AppendDataBoundItems = true;
+    //    RadComboBoxItem item = new RadComboBoxItem("Select", "0");
+    //    option.Items.Add(item);      
+    //    option.DataBind();
+
+    //}
+    //public static bool CreateDelegate(string @Name,string @CreatedBy)
+    //{
+    //    bool sp = false;
+    //    SqlConnection con = new SqlConnection(Connection.DBConnectionString());
+    //    con.Open();
+    //    SqlCommand cmd = new SqlCommand("Sp_DelegateService", con);
+    //    cmd.CommandType = CommandType.StoredProcedure;
+
+    //    cmd.Parameters.Add("@Mode", SqlDbType.NVarChar, 30).Value = "INSERT";
+    //    cmd.Parameters.Add("@RecordID", SqlDbType.Int).Value = null;
+    //    cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 60).Value = @Name;      
+    //    cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 30).Value = @CreatedBy;
+
+
+    //    //Last Inserted or Updated Record
+    //    SqlParameter scope = new SqlParameter("@scope", SqlDbType.Int);
+    //    scope.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(scope);
+
+    //    //Additional:action result:'successful','Error'
+    //    SqlParameter result = new SqlParameter("@output", SqlDbType.VarChar, 50);
+    //    result.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(result);
+
+    //    //Actual error encountered
+    //    SqlParameter errormsg = new SqlParameter("@error_msg", SqlDbType.VarChar, -1);
+    //    errormsg.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(errormsg);
+
+    //    cmd.ExecuteNonQuery();
+    //    con.Close();
+    //    if (result.Value.ToString() == "successful")
+    //    {
+    //        sp = true;
+    //    }
+    //    else
+    //    {
+    //        sp = false;
+    //    }
+
+    //    return sp;
+    //}
+  
+    //    #endregion
+
+    //#region ContactType Table
+    //public static void GetContactType(RadComboBox option)
+    //{
+
+    //    string query = "SELECT * FROM [ContactType] where IsDisable=0";
+    //    DataSet ds = new DataSet();
+    //    ds = Connection.GetDataSet(query);
+    //    option.DataSource = ds;
+    //    option.DataTextField = "Name";
+    //    option.DataValueField = "RecordID";
+    //   // option.AppendDataBoundItems = true;
+    //    //RadComboBoxItem item = new RadComboBoxItem("Select", "0");
+    //    //option.Items.Add(item);       
+    //    option.DataBind();
+
+    //}
+    //public static bool CreateContactType(string @Name, string @CreatedBy)
+    //{
+    //    bool sp = false;
+    //    SqlConnection con = new SqlConnection(Connection.DBConnectionString());
+    //    con.Open();
+    //    SqlCommand cmd = new SqlCommand("Sp_ContactTypeService", con);
+    //    cmd.CommandType = CommandType.StoredProcedure;
+
+    //    cmd.Parameters.Add("@Mode", SqlDbType.NVarChar, 30).Value = "INSERT";
+    //    cmd.Parameters.Add("@RecordID", SqlDbType.Int).Value = null;
+    //    cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 60).Value = @Name;
+    //    cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 30).Value = @CreatedBy;
+
+
+    //    //Last Inserted or Updated Record
+    //    SqlParameter scope = new SqlParameter("@scope", SqlDbType.Int);
+    //    scope.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(scope);
+
+    //    //Additional:action result:'successful','Error'
+    //    SqlParameter result = new SqlParameter("@output", SqlDbType.VarChar, 50);
+    //    result.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(result);
+
+    //    //Actual error encountered
+    //    SqlParameter errormsg = new SqlParameter("@error_msg", SqlDbType.VarChar, -1);
+    //    errormsg.Direction = ParameterDirection.Output;
+    //    cmd.Parameters.Add(errormsg);
+
+    //    cmd.ExecuteNonQuery();
+    //    con.Close();
+    //    if (result.Value.ToString() == "successful")
+    //    {
+    //        sp = true;
+    //    }
+    //    else
+    //    {
+    //        sp = false;
+    //    }
+
+    //    return sp;
+    //}
+    //    #endregion
+
+
+
+
+
+
+    //}
+}

@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Text;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
+
+/// <summary>
+/// Summary description for En_De_cryptor
+/// </summary>
+/// 
+namespace DataAccessLayer
+{
+  
+}
