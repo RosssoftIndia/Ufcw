@@ -1,0 +1,44 @@
+.RadTreeView_Black {
+  color: white;
+  font: normal 12px/16px "Segoe UI", Arial, Helvetica, sans-serif; }
+  .RadTreeView_Black .rtIn {
+    *color: white; }
+  .RadTreeView_Black .rtHover .rtIn {
+    color: #9eda29;
+    border-color: #636363 #464646 #1f1f1f;
+    background-color: #2e2e2e;
+    background-image: url('TreeView/ItemHoveredBg.png'); }
+  .RadTreeView_Black .rtSelected .rtIn {
+    color: white;
+    border-color: #535353 #2e2e2e #1a1a1a;
+    background-color: #313131;
+    background-image: url('TreeView/ItemSelectedBg.png'); }
+  .RadTreeView_Black .rtEdit .rtIn {
+    border-color: #1a1a1a #2e2e2e #535353;
+    color: #ffffff; }
+    .RadTreeView_Black .rtEdit .rtIn input {
+      color: white;
+      font: normal 12px/16px "Segoe UI", Arial, Helvetica, sans-serif;
+      color: white;
+      border-color: #535353 #2e2e2e #1a1a1a;
+      border: 0;
+      background-color: #313131;
+      background-image: url('TreeView/ItemSelectedBg.png'); }
+  .RadTreeView_Black .rtChecked,
+  .RadTreeView_Black .rtUnchecked,
+  .RadTreeView_Black .rtIndeterminate {
+    background-image: url('Common/radFormToggleSprite.png');
+    _background-image: url('Common/radFormToggleSpriteIE6.png'); }
+  .RadTreeView_Black .rtLoadingIcon {
+    background-image: url('Common/loading_small.gif'); }
+  .RadTreeView_Black .rtSelected .rtLoadingBefore,
+  .RadTreeView_Black .rtSelected .rtLoadingAfter,
+  .RadTreeView_Black .rtSelected .rtLoadingBelow {
+    color: #333333; }
+  .RadTreeView_Black .rtPlus,
+  .RadTreeView_Black .rtMinus {
+    background-image: url('TreeView/PlusMinus.png'); }
+
+.RadTreeView_Black_disabled .rtIn,
+.RadTreeView_Black .rtDisabled .rtIn {
+  color: #ccc; }

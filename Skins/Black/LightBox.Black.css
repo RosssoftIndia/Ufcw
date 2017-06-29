@@ -1,0 +1,22 @@
+.RadLightBox_Black {
+  font: normal 12px "Segoe UI", Arial, Helvetica, sans-serif;
+  color: white; }
+  .RadLightBox_Black .rltbWrapper {
+    background: #202020; }
+  .RadLightBox_Black .rltbDescriptionBox {
+    color: #ffffff; }
+  .RadLightBox_Black .rmpPager {
+    color: #a9a9a9; }
+  .RadLightBox_Black .rltbClose,
+  .RadLightBox_Black .rltbCloseIcon,
+  .RadLightBox_Black .rltbPrevButton,
+  .RadLightBox_Black .rltbNextButton {
+    background-image: url('LightBox/sprite.png'); }
+  .RadLightBox_Black .rltbClose {
+    background-position: 0 -89px; }
+  .RadLightBox_Black .rltbCloseButton:hover .rltbCloseIcon {
+    background-position: -40px 0; }
+  .RadLightBox_Black .rltbPrevButton {
+    background-position: -40px -40px; }
+  .RadLightBox_Black .rltbNextButton {
+    background-position: 0 -40px; }
