@@ -1,0 +1,507 @@
+﻿/****** Object:  StoredProcedure [dbo].[Members_Information_Sp]    Script Date: 01/09/2015 14:32:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--ALTER PROCEDURE [dbo].[Members_Information_Sp]
+--(   
+--	@Mode nvarchar(30),
+--	@RecordID [int] =NULL,
+--	@MemberID [nvarchar](50)  =NULL,
+--	@FirstName [nvarchar](30)  =NULL,
+--	@LastName [nvarchar](30)  =NULL,
+--	@Initial [nvarchar](30)  =NULL,
+--	@SSN [nvarchar](15)  =NULL,
+--	@BirthDate [smalldatetime]  =NULL,
+--	@Gender [int] =NULL,
+--	@Pri_Address [nvarchar](max) =NULL,
+--	@Pri_City [nvarchar](30) =NULL,
+--	@Pri_State [nvarchar](15) =NULL,
+--	@Pri_Zip [nvarchar](15) =NULL,
+--	@Pri_Zip_Plus4 [nvarchar](15) =NULL,
+--	@Sec_Address [nvarchar](max) =NULL,
+--	@Sec_City [nvarchar](30) =NULL,
+--	@Sec_State [nvarchar](15) =NULL,
+--	@Sec_Zip [nvarchar](15) =NULL,
+--	@Sec_Zip_Plus4 [nvarchar](15) =NULL,
+--	@Pri_Phone [nvarchar](15) =NULL,
+--	@Pri_Fax [nvarchar](15) =NULL,
+--	@Pri_Email [nvarchar](150) =NULL,
+--	@Sec_Phone [nvarchar](15) =NULL,
+--	@Sec_Fax [nvarchar](15) =NULL,
+--	@Sec_Email [nvarchar](150) =NULL,
+--	@Pri_Extn [nvarchar](15) =NULL,
+--	@Sec_Extn [nvarchar](15) =NULL,
+--	--@IDoption [nvarchar](15),
+--	@CreatedBy [nvarchar](30),	
+--	@HiredDate datetime,		
+--	@scope int output,	
+--	@output varchar(50) output,
+--	@error_msg varchar(Max) output
+	
+--) 
+--AS 
+--BEGIN
+--    SET NOCOUNT ON
+   
+--BEGIN TRY		
+--	BEGIN TRANSACTION	
+--IF(@Mode = 'Insert')
+--BEGIN 
+--INSERT INTO [dbo].[Members] 
+--           ([MemberID] 
+--           ,[FirstName] 
+--           ,[LastName] 
+--           ,[Initial]
+--           ,[SSN] 
+--           ,[BirthDate]
+--           ,[Gender]            
+--           ,[CreatedBy] 
+--           ,[UpdatedBy] 
+--           ,[LastUpdateDate]
+--           ,Hired_dt)
+--     VALUES
+--           (@MemberID 
+--           ,@FirstName 
+--           ,@LastName
+--           ,@Initial 
+--           ,[dbo].[PadLeftOrLimitSSN](@SSN,'0',9)
+--           ,@BirthDate 
+--           ,@Gender 
+--           ,@CreatedBy       
+--           ,@CreatedBy          
+--           ,GETDATE()
+--           ,@HiredDate)
+ 
+-- SELECT @scope = SCOPE_IDENTITY()
+ 
+--  --create memberIDwithout shop
+
+--UPDATE [dbo].[Members] 
+--   SET [MemberID] = dbo.GenerateMemberID(@scope,1) 
+-- WHERE [RecordID] = @scope 
+
+          
+--INSERT INTO [dbo].[Members_Address] 
+--           ([ReferenceID]
+--           ,[Pri_Address]
+--           ,[Pri_City]
+--           ,[Pri_State]
+--           ,[Pri_Zip]
+--           ,[Pri_Zip_Plus4]
+--           ,[Sec_Address]
+--           ,[Sec_City]
+--           ,[Sec_State]
+--           ,[Sec_Zip]
+--           ,[Sec_Zip_Plus4]
+--           ,[Pri_Phone]
+--           ,[Pri_Fax]
+--           ,[Pri_Email]
+--           ,[Sec_Phone]
+--           ,[Sec_Fax]
+--           ,[Sec_Email]
+--           ,[Pri_Phone_Ext]
+--			,[Sec_Phone_Ext])
+--     VALUES
+--           (@scope
+--           ,@Pri_Address 
+--           ,@Pri_City
+--           ,@Pri_State
+--           ,@Pri_Zip
+--           ,@Pri_Zip_Plus4 
+--           ,@Sec_Address 
+--           ,@Sec_City
+--           ,@Sec_State
+--           ,@Sec_Zip
+--           ,@Sec_Zip_Plus4 
+--           ,@Pri_Phone
+--           ,@Pri_Fax
+--           ,@Pri_Email
+--           ,@Sec_Phone
+--           ,@Sec_Fax
+--           ,@Sec_Email
+--           ,@Pri_Extn
+--           ,@Sec_Extn)
+           
+--END
+--Else IF(@Mode = 'Update')
+--BEGIN 
+--Declare @OldSSN [nvarchar](15) 
+--SELECT @OldSSN=[SSN] from [dbo].[Members] where RecordID=@RecordID
+
+--IF(@OldSSN<>@SSN)
+--BEGIN
+
+--UPDATE [dbo].[Member_SSN]
+--   SET [Active] = 0
+-- WHERE [ReferenceID]=@RecordID
+
+--INSERT INTO [dbo].[Member_SSN]
+--           ([ReferenceID]
+--           ,[MemberID]
+--           ,[SSN]
+--           ,[New_SSN]
+--           ,[Active]
+--           ,[Mod_Date]
+--           ,[Moduser])
+--     VALUES
+--           (@RecordID,
+--           @MemberID,
+--           [dbo].[PadLeftOrLimitSSN](@OldSSN,'0',9),
+--           [dbo].[PadLeftOrLimitSSN](@SSN,'0',9),
+--           1,
+--           GETDATE(),
+--           @CreatedBy)
+           
+--UPDATE [dbo].[Members]
+--   SET [MemberID]  = @MemberID 
+--      ,[FirstName]  = @FirstName 
+--      ,[LastName] =@LastName 
+--      ,[Initial] = @Initial 
+--      ,[SSN] = [dbo].[PadLeftOrLimitSSN](@SSN,'0',9)
+--      ,[BirthDate] =@BirthDate 
+--      ,[Gender] =@Gender 
+--      ,[UpdatedBy] = @CreatedBy 
+--      ,[LastUpdateDate] = GETDATE()
+-- WHERE [RecordID] = @RecordID  
+ 
+-- SELECT @scope = SCOPE_IDENTITY()
+
+          
+--UPDATE [dbo].[Members_Address] 
+--   SET [Pri_Address] = @Pri_Address
+--      ,[Pri_City] = @Pri_City
+--      ,[Pri_State] = @Pri_State
+--      ,[Pri_Zip] = @Pri_Zip
+--      ,[Pri_Zip_Plus4] = @Pri_Zip_Plus4
+--      ,[Sec_Address] = @Sec_Address
+--      ,[Sec_City] = @Sec_City
+--      ,[Sec_State] = @Sec_State
+--      ,[Sec_Zip] = @Sec_Zip
+--      ,[Sec_Zip_Plus4] = @Sec_Zip_Plus4
+--      ,[Pri_Phone] = @Pri_Phone
+--      ,[Pri_Fax] = @Pri_Fax
+--      ,[Pri_Email] = @Pri_Email
+--      ,[Sec_Phone] = @Sec_Phone
+--      ,[Sec_Fax] = @Sec_Fax
+--      ,[Sec_Email] = @Sec_Email
+--      ,[Pri_Phone_Ext]=@Pri_Extn
+--      ,[Sec_Phone_Ext]=@Sec_Extn
+-- WHERE [ReferenceID] = @RecordID 
+ 
+--END
+--ELSE
+--BEGIN
+--UPDATE [dbo].[Members]
+--   SET [MemberID]  = @MemberID 
+--      ,[FirstName]  = @FirstName 
+--      ,[LastName] =@LastName 
+--      ,[Initial] = @Initial 
+--      ,[SSN] = @SSN
+--      ,[BirthDate] =@BirthDate 
+--      ,[Gender] =@Gender 
+--      ,[UpdatedBy] = @CreatedBy 
+--      ,[LastUpdateDate] = GETDATE()
+-- WHERE [RecordID] = @RecordID  
+ 
+-- SELECT @scope = SCOPE_IDENTITY()
+
+          
+--UPDATE [dbo].[Members_Address] 
+--   SET [Pri_Address] = @Pri_Address
+--      ,[Pri_City] = @Pri_City
+--      ,[Pri_State] = @Pri_State
+--      ,[Pri_Zip] = @Pri_Zip
+--      ,[Pri_Zip_Plus4] = @Pri_Zip_Plus4
+--      ,[Sec_Address] = @Sec_Address
+--      ,[Sec_City] = @Sec_City
+--      ,[Sec_State] = @Sec_State
+--      ,[Sec_Zip] = @Sec_Zip
+--      ,[Sec_Zip_Plus4] = @Sec_Zip_Plus4
+--      ,[Pri_Phone] = @Pri_Phone
+--      ,[Pri_Fax] = @Pri_Fax
+--      ,[Pri_Email] = @Pri_Email
+--      ,[Sec_Phone] = @Sec_Phone
+--      ,[Sec_Fax] = @Sec_Fax
+--      ,[Sec_Email] = @Sec_Email
+--      ,[Pri_Phone_Ext]=@Pri_Extn
+--      ,[Sec_Phone_Ext]=@Sec_Extn
+-- WHERE [ReferenceID] = @RecordID 
+
+--    END
+--    		END	
+--Else IF(@Mode = 'InActive')    		
+--BEGIN
+--UPDATE [Members_Hired]
+--SET [StatusID] = (SELECT RecordID FROM dbo.Status WHERE Name='InActive')
+--	,[TerminatedDate] = @BirthDate 
+--where RecordID = @RecordID 
+--SELECT @scope = SCOPE_IDENTITY()
+--END     		
+--Else IF(@Mode = 'Terminate')    		
+--BEGIN
+--UPDATE [Members_Hired]
+--SET [StatusID] = (SELECT RecordID FROM dbo.Status WHERE Name='Terminated')
+--where RecordID = @RecordID 
+--SELECT @scope = SCOPE_IDENTITY()
+--END 	
+    		
+--set @output = 'successful'	
+--COMMIT TRANSACTION
+--END TRY
+
+
+--BEGIN CATCH
+--	IF @@TRANCOUNT > 0 --some error has occurred
+--	Begin
+--		 ROLLBACK TRANSACTION;
+--	End
+--	set @output = 'Error'
+--		set @error_msg =  ERROR_MESSAGE() 
+		
+--		INSERT INTO [DB_Log]
+--           ([Process]
+--           ,[Member]
+--           ,[Errormsg])
+--     VALUES
+--           ('Members_Information_Sp'
+--           ,@CreatedBy
+--           ,@error_msg)
+		
+--END CATCH
+--END
+GO
+
+
+/****** Object:  StoredProcedure [dbo].[Members_Shops_Sp]    Script Date: 01/09/2015 14:32:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--ALTER PROCEDURE [dbo].[Members_Shops_Sp]
+--(   
+--	@Mode nvarchar(30),
+--	@RecordID [int] =NULL,
+--	@ReferenceID [int]=NULL,
+--	@ShopID [int]=NULL,
+--	@StatusID [int] =NULL,
+--	@HiredDate [smalldatetime]=NULL,
+--	@AffDate [smalldatetime]=NULL,
+--	@IDoption [nvarchar](15)=NULL,
+--	@CreatedBy [nvarchar](30),			
+--	@scope int output,	
+--	@output varchar(50) output,
+--	@error_msg varchar(Max) output
+	
+--) 
+--AS 
+--BEGIN
+--    SET NOCOUNT ON
+   
+--BEGIN TRY		
+--	BEGIN TRANSACTION	
+--IF(@Mode = 'Insert')
+--	BEGIN 
+--INSERT INTO [dbo].[Members_Hired]  
+--           ([ReferenceID]
+--		   ,[ShopID]		   
+--		   ,[HiredDate]         
+--           ,[CreatedBy] 
+--           ,[UpdatedBy] 
+--           ,[LastUpdateDate]
+--           ,[AffiliationDate])
+--     VALUES
+--           (@ReferenceID 
+--           ,@ShopID          
+--           ,@HiredDate          
+--           ,@CreatedBy       
+--           ,@CreatedBy          
+--           ,GETDATE()
+--           ,@AffDate)
+ 
+-- SELECT @scope = SCOPE_IDENTITY()
+--   --create memberID with shop
+--   If (@IDoption='2')
+--   Begin
+--UPDATE [dbo].[Members_Hired] 
+--   SET [MemberID] = dbo.GenerateMemberID(@scope,2) 
+-- WHERE [RecordID] = @scope 
+-- End
+-- Else If(@IDoption='1' or @IDoption='' or ISNULL(@IDoption,'')='')
+-- Begin
+-- Declare @memberID [nvarchar](50)
+-- select Top 1 @memberID=MemberID from dbo.Members_Hired where ReferenceID in (SELECT ReferenceID from dbo.Members_Hired where RecordID=@scope) order by TerminatedDate desc
+-- --select @memberID=MemberID from dbo.Members where RecordID=(SELECT ReferenceID from dbo.Members_Hired where RecordID=@scope)
+-- UPDATE [dbo].[Members_Hired] 
+--   SET [MemberID] = @memberID
+-- WHERE [RecordID] = @scope 
+-- End
+ 
+--  INSERT INTO [Members_upload]
+--           ([ReferenceID]                 
+--           ,[CreatedBy] 
+--           ,[UpdatedBy] 
+--           ,[LastUpdateDate])
+--     VALUES
+--           (@scope  		   
+--           ,@CreatedBy       
+--           ,@CreatedBy          
+--           ,GETDATE())
+--    		END
+--IF(@Mode = 'Update')
+--BEGIN
+--UPDATE [dbo].[Members_Hired]
+--   SET [ShopID] = @ShopID       
+--      ,[HiredDate] = @HiredDate           
+--      ,[UpdatedBy] = @CreatedBy 
+--      ,[LastUpdateDate] = GETDATE()
+--      ,[AffiliationDate]=@AffDate
+-- WHERE RecordID = @RecordID 
+ 
+-- SELECT @scope = SCOPE_IDENTITY()
+--END
+
+--set @output = 'successful'	
+--COMMIT TRANSACTION
+--END TRY
+
+
+--BEGIN CATCH
+--	IF @@TRANCOUNT > 0 --some error has occurred
+--	Begin
+--		 ROLLBACK TRANSACTION;
+--	End
+--	set @output = 'Error'
+--		set @error_msg =  ERROR_MESSAGE() 
+		
+--		INSERT INTO [DB_Log]
+--           ([Process]
+--           ,[Member]
+--           ,[Errormsg])
+--     VALUES
+--           ('Members_Shops_Sp'
+--           ,@CreatedBy
+--           ,@error_msg)
+		
+--END CATCH
+--END
+GO
+
+ALTER PROCEDURE [dbo].[Active_Percaptia_Search_sp]
+(
+@Mode nvarchar(30),
+@StartDate datetime,
+@EndDate datetime
+)
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+	
+SELECT       distinct Local_Number='0312   ',
+			 cast(DATEPART(YYYY, CONVERT(datetime ,'12/31/2014',20)) as varchar(4))+dbo.PadLeftOrLimit(cast(DATEPART(MM, CONVERT(datetime ,'12/31/2014',20)) as varchar(2)),'0',2) as Report_Date,
+             dbo.PadRightOrLimit(dbo.ReplaceSpecial(Members.SSN),' ',10) as SSN,
+             dbo.PadRightOrLimit(Members.LastName,' ',30) as LastName,
+             dbo.PadRightOrLimit(Members.FirstName,' ',20)  as FirstName,
+             dbo.PadRightOrLimit(Members.Initial,' ',1) as Initial,
+             dbo.PadRightOrLimit(Members_Address.Pri_Address,' ',60) as Pri_Address,
+             dbo.PadRightOrLimit(Members_Address.Pri_City,' ',30) as Pri_City,
+             dbo.PadRightOrLimit(Members_Address.Pri_State,' ',5) as Pri_State,
+             dbo.PadRightOrLimit(dbo.PadLeftOrLimit(Members_Address.Pri_Zip,'0',5),' ',10) as Pri_Zip,
+             Country='A',
+             dbo.PadRightOrLimit(dbo.ReplaceSpecial(Members_Address.Pri_Phone),' ',15) as Pri_Phone,
+             dbo.PadRightOrLimit(Members_Address.Pri_Email,' ',60) as Pri_Email,
+             dbo.PadRightOrLimit((case when Members.Gender=0 then 'M' else 'F' End),' ',1) as Gender, 
+             Marital_status='U', 
+             Voter_Registration_Flag='E',
+             Party_Affiliation='U',
+             PAC_Membership='U',
+             PAC_Contribution_Rate='00000',
+             PAC_Contribution_Cycle='U',
+             dbo.PadRightOrLimit(dbo.PadLeftOrLimit(Shops.ShopID,'0',18),'0',20) as ShopID,
+             Member_Class='01',
+             Full_time='F',
+             Mail_Flag='N',
+             dbo.PadRightOrLimit(REPLACE(convert(varchar, Members.BirthDate, 102),'.',''),' ',8) as BirthDate,
+             
+             dbo.PadRightOrLimit(REPLACE(convert(varchar, Members_Hired.HiredDate, 102),'.',''),' ',8) as HiredDate ,
+             dbo.MonthCorrection(Members.CreateDate,'05/01/2013','12/31/2014', AffiliationDate) as Affiliation_Date,
+             dbo.PadRightOrLimit(cast(DATEPART(YYYY, CONVERT(datetime ,Members_Hired.TerminatedDate,20)) as varchar(4))+dbo.PadLeftOrLimit(cast(DATEPART(MM, CONVERT(datetime ,Members_Hired.TerminatedDate,20)) as varchar(2)),'0',2),' ',6) as TerminatedDate,
+             
+             
+             Dues_Rate='00000'
+
+
+
+
+                         
+FROM            Members LEFT JOIN
+                         Members_Address ON Members.RecordID = Members_Address.ReferenceID LEFT JOIN
+                         Members_Fee ON Members.RecordID = Members_Fee.ReferenceID LEFT JOIN
+                         Members_Hired ON Members.RecordID = Members_Hired.ReferenceID LEFT JOIN
+                         Members_Rate ON Members.RecordID = Members_Rate.ReferenceID LEFT JOIN 
+                         Shops ON Members_Hired.ShopID=Shops.RecordID and Members_Hired.HiredDate < CONVERT(datetime ,'12/31/2014',20) AND ISNULL(dbo.PadRightOrLimit(dbo.ReplaceSpecial(Members.SSN),'',10), '') <> ''                   
+WHERE Members_Hired.StatusID=1   and Members.BirthDate between @StartDate and @EndDate
+--and Members_Hired.HiredDate < CONVERT(datetime ,'6/1/2013',20) 
+AND ISNULL(dbo.PadRightOrLimit(dbo.ReplaceSpecial(Members.SSN),'',10), '') <> ''       
+END
+GO
+/****** Object:  StoredProcedure [dbo].[Active_Percaptia_N_sp]    Script Date: 01/09/2015 14:32:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[Active_Percaptia_N_sp]
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+	
+SELECT       distinct Local_Number='0312   ',
+			 cast(DATEPART(YYYY, CONVERT(datetime ,'12/31/2014',20)) as varchar(4))+dbo.PadLeftOrLimit(cast(DATEPART(MM, CONVERT(datetime ,'12/31/2014',20)) as varchar(2)),'0',2) as Report_Date,
+             dbo.PadRightOrLimit(dbo.ReplaceSpecial(Members.SSN),' ',10) as SSN,
+             dbo.PadRightOrLimit(Members.LastName,' ',30) as LastName,
+             dbo.PadRightOrLimit(Members.FirstName,' ',20)  as FirstName,
+             dbo.PadRightOrLimit(Members.Initial,' ',1) as Initial,
+             dbo.PadRightOrLimit(Members_Address.Pri_Address,' ',60) as Pri_Address,
+             dbo.PadRightOrLimit(Members_Address.Pri_City,' ',30) as Pri_City,
+             dbo.PadRightOrLimit(Members_Address.Pri_State,' ',5) as Pri_State,
+             dbo.PadRightOrLimit(dbo.PadLeftOrLimit(Members_Address.Pri_Zip,'0',5),' ',10) as Pri_Zip,
+             Country='A',
+             dbo.PadRightOrLimit(dbo.ReplaceSpecial(Members_Address.Pri_Phone),' ',15) as Pri_Phone,
+             dbo.PadRightOrLimit(Members_Address.Pri_Email,' ',60) as Pri_Email,
+             dbo.PadRightOrLimit((case when Members.Gender=0 then 'M' else 'F' End),' ',1) as Gender, 
+             Marital_status='U', 
+             Voter_Registration_Flag='E',
+             Party_Affiliation='U',
+             PAC_Membership='U',
+             PAC_Contribution_Rate='00000',
+             PAC_Contribution_Cycle='U',
+             dbo.PadRightOrLimit(dbo.PadLeftOrLimit(Shops.ShopID,'0',18),'0',20) as ShopID,
+             Member_Class='01',
+             Full_time='F',
+             Mail_Flag='N',
+             dbo.PadRightOrLimit(REPLACE(convert(varchar, Members.BirthDate, 102),'.',''),' ',8) as BirthDate,
+             
+             dbo.PadRightOrLimit(REPLACE(convert(varchar, Members_Hired.HiredDate, 102),'.',''),' ',8) as HiredDate ,
+             dbo.MonthCorrection(Members.CreateDate,'05/01/2013','12/31/2014', AffiliationDate) as Affiliation_Date,
+             dbo.PadRightOrLimit(cast(DATEPART(YYYY, CONVERT(datetime ,Members_Hired.TerminatedDate,20)) as varchar(4))+dbo.PadLeftOrLimit(cast(DATEPART(MM, CONVERT(datetime ,Members_Hired.TerminatedDate,20)) as varchar(2)),'0',2),' ',6) as TerminatedDate,
+             
+             
+             Dues_Rate='00000'
+
+
+
+
+                         
+FROM            Members LEFT JOIN
+                         Members_Address ON Members.RecordID = Members_Address.ReferenceID LEFT JOIN
+                         Members_Fee ON Members.RecordID = Members_Fee.ReferenceID LEFT JOIN
+                         Members_Hired ON Members.RecordID = Members_Hired.ReferenceID LEFT JOIN
+                         Members_Rate ON Members.RecordID = Members_Rate.ReferenceID LEFT JOIN 
+                         Shops ON Members_Hired.ShopID=Shops.RecordID and Members_Hired.HiredDate < CONVERT(datetime ,'12/31/2014',20) AND ISNULL(dbo.PadRightOrLimit(dbo.ReplaceSpecial(Members.SSN),'',10), '') <> ''                   
+WHERE Members_Hired.StatusID=1   
+--and Members_Hired.HiredDate < CONVERT(datetime ,'6/1/2013',20) 
+AND ISNULL(dbo.PadRightOrLimit(dbo.ReplaceSpecial(Members.SSN),'',10), '') <> ''       
+END
+GO

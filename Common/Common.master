@@ -1,0 +1,97 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Common.master.cs" Inherits="Common" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+   <link rel="stylesheet" type="text/css" href="~/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="~/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="~/css/animate.css"/> 
+    
+    <link rel="stylesheet" href="~/Skins/Orange/ReportViewer.css" type="text/css" />           
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script> 
+
+   
+<script type="text/javascript">
+$(document).ready(function() {
+SearchText();
+});
+function SearchText() {
+$(".autosuggest").autocomplete({
+source: function(request, response) {
+$.ajax({
+type: "POST",
+contentType: "application/json; charset=utf-8",
+url: "../Members/Add.aspx/GetAutoCompleteData",
+data: "{'username':'" + document.getElementById('txtSearch').value + "'}",
+dataType: "json",
+success: function(data) {
+response(data.d);
+},
+error: function(result) {
+alert("Error");
+}
+});
+}
+});
+}
+</script>
+  
+    <script type="text/javascript">
+        function callBackFn() {
+           // alert("this is the client-side callback function. The RadAlert returned: " + arg);
+        }
+</script>
+<script language="JavaScript">
+
+    function disableEnterKey(e) {
+        var key;
+        if (window.event)
+            key = window.event.keyCode; //IE
+        else
+            key = e.which; //firefox      
+
+        return (key != 13);
+    }
+
+</script>
+</head>
+<body >
+
+<form id="form1" runat="server" >
+    <div id="body" class="unselectable" OnKeyPress="return disableKeyPress(event)">
+         <div id="navbar" class="navbar navbar-fixed-top">
+        
+            <div class="navbar-inner">
+                <div class="container-fluid" style="padding-left: 0px;" >
+                    <a class="pull-left" style="margin-top: 0px; margin-right: 30px;" href="">
+                       <asp:Image ID="img_logo"  ImageUrl="~/images/logo.png" style="max-height: 40px;" runat="server" />
+                    </a>
+                   <%-- <h1><a class="brand" href="?">UFCW</a></h1>--%>
+                    <div class="nav-collapse">
+                  <asp:ContentPlaceHolder id="MenuPlaceHolder" runat="server"></asp:ContentPlaceHolder>                 
+                  <div style="float:right;margin-top:8px;"  >
+                   <asp:LoginView ID="LoginView" runat="Server">
+            <LoggedInTemplate>
+               <span style="color:White;font-size:12px;font-weight:bold;">
+                <asp:LoginName ID="LoginName" FormatString="Welcome, {0}" runat="Server" />&nbsp;|&nbsp;</span>                                                                           
+                <asp:HyperLink ID="Logout" title="Change current settings" runat="server" NavigateUrl="~/Logout.aspx"  class="btn"><span class="logout-icon"></span>Logout</asp:HyperLink>
+            </LoggedInTemplate>                                        
+        </asp:LoginView> 
+                   </div>                            
+                     
+                    </div>
+                </div>
+            </div>
+        </div>  
+    <asp:ContentPlaceHolder id="ContentPlaceHolder" runat="server">
+    </asp:ContentPlaceHolder>      
+    </div>
+ 
+ 
+      </form>
+</body> 
+ 
+</html>
