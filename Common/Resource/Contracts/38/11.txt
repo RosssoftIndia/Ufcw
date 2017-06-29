@@ -1,0 +1,118 @@
+USE [UFCWW]
+GO
+/****** Object:  StoredProcedure [dbo].[Notes_Sp]    Script Date: 05/13/2013 20:08:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[Notes_Sp]
+(   
+	@Mode nvarchar(30),
+	@DataID int=null,
+	@RecordID int = null,
+	@Notes nvarchar(max),
+	@Flag Bit,
+	@Inactive Bit,
+	@CreatedBy nvarchar(30),	
+	@scope int output,	
+	@output varchar(50) output,
+	@error_msg varchar(Max) output
+) 
+AS 
+BEGIN
+    SET NOCOUNT ON
+   
+BEGIN TRY		
+	BEGIN TRANSACTION	
+IF(@Mode = 'Shops')
+		
+BEGIN
+INSERT INTO [Shops_Notes] 
+           ([Note]
+           ,[ReferenceID]     
+           ,[CreatedBy]
+            ,[Flag]
+      ,[Inactive])    
+     VALUES
+           (@Notes        
+		   ,@RecordID
+           ,@CreatedBy
+            ,@Flag
+            ,@Inactive)
+SELECT @scope = SCOPE_IDENTITY()
+END
+
+Else IF(@Mode = 'Members')
+		
+BEGIN
+INSERT INTO [Members_Notes] 
+           ([Note]  
+           ,[ReferenceID]     
+           ,[CreatedBy]
+           ,[Flag]
+      ,[Inactive])    
+     VALUES
+           (@Notes        
+		   ,@RecordID
+           ,@CreatedBy
+           ,@Flag
+           ,@Inactive)
+SELECT @scope = SCOPE_IDENTITY()
+END
+
+
+Else IF(@Mode = 'ShopNotesDelete')
+		
+BEGIN
+Update [Shops_Notes] set  [Inactive]=0 where RecordID=@DataID           
+SELECT @scope = SCOPE_IDENTITY()
+END
+
+Else IF(@Mode = 'MemberNotesDelete')
+		
+BEGIN
+Update [Members_Notes] set  [Inactive]=0 where RecordID=@DataID           
+SELECT @scope = SCOPE_IDENTITY()
+END
+
+Else IF(@Mode = 'ShopNotesUpdate')
+		
+BEGIN
+Update [Shops_Notes] set  [Flag]=@Flag where RecordID=@DataID
+SELECT @scope = SCOPE_IDENTITY()
+END
+
+
+Else IF(@Mode = 'MemberNotesUpdate')
+		
+BEGIN
+Update [Members_Notes] set  [Flag]=@Flag where RecordID=@DataID           
+SELECT @scope = SCOPE_IDENTITY()
+END
+
+set @output = 'successful'	
+COMMIT TRANSACTION
+END TRY
+
+
+BEGIN CATCH
+	IF @@TRANCOUNT > 0 --some error has occurred
+	Begin
+		 ROLLBACK TRANSACTION;
+	End
+	set @output = 'Error'
+		set @error_msg =  ERROR_MESSAGE() 
+		
+		INSERT INTO [DB_Log]
+           ([Process]
+           ,[Member]
+           ,[Errormsg])
+     VALUES
+           ('Notes_Sp'
+           ,@CreatedBy
+           ,@error_msg)
+		
+END CATCH
+END
+

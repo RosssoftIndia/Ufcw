@@ -1,0 +1,32 @@
+2013-03-25 19:41:56 : 0001 -- OEM-wrapper-preboot version = 2.0.2.113 
+2013-03-25 19:41:56 : 0002 -- Finished processing command line arguments
+2013-03-25 19:41:56 : 0003 -- Log file(s) will be created at C:\Users\RossSoft03\Documents\ESET-installation-phase1.log
+2013-03-25 19:41:56 : 0004 -- Temp file(s) will be created at C:\ProgramData\Microsoft\Windows\Start Menu\Programs\ESET
+2013-03-25 19:41:56 : 0005 -- OS language = ENU
+2013-03-25 19:41:56 : 0006 -- Activator URL = 
+2013-03-25 19:41:56 : 0007 -- Ensuring this is an Intel Motherboard
+2013-03-25 19:41:56 : 0008 -- CleanWmi, input = >Intel Corporation<
+2013-03-25 19:41:56 : 0009 -- $wmi_manufacturer = INTEL CORPORATION
+2013-03-25 19:41:56 : 0010 -- CleanWmi, input = >DH55TC<
+2013-03-25 19:41:56 : 0011 -- $wmi_product = DH55TC
+2013-03-25 19:41:56 : 0012 -- CleanWmi, input = >AAE70932-303<
+2013-03-25 19:41:56 : 0013 -- $wmi_version = AAE70932-303
+2013-03-25 19:41:56 : 0014 -- CleanWmi, input = >BTTC145005VX<
+2013-03-25 19:41:56 : 0015 -- $wmi_serialNumber = BTTC145005VX
+2013-03-25 19:41:56 : 0016 -- Looking for installer in: D:\Software\Applications\ESS\ESS Installers
+2013-03-25 19:41:56 : 0017 -- Determining what to install
+2013-03-25 19:41:56 : 0018 -- Looking for an installer in the current language, or the closest language, or ENU, in that order
+2013-03-25 19:41:56 : 0019 -- BestVersion = v4.0.474.0
+2013-03-25 19:41:56 : 0020 -- Found best installer at d:\software\applications\ess\ess installers\v4.0.474.0\ess_nt64_enu.msi
+2013-03-25 19:41:56 : 0021 -- Setting up Post-boot Sequence
+2013-03-25 19:41:56 : 0022 -- Post-boot Sequence Installation Result [success=1]: 1
+2013-03-25 19:41:56 : 0023 -- Leaving information in registry for later use
+2013-03-25 19:41:56 : 0024 -- Performing installation with configuration file: C:\Users\ROSSSO~1\AppData\Local\Temp\ESET-3012\cfg.xml
+2013-03-25 19:41:56 : 0025 -- Installation command: C:\Windows\system32\cmd.exe /c msiexec /i "d:\software\applications\ess\ess installers\v4.0.474.0\ess_nt64_enu.msi" ADMINCFG="C:\Users\ROSSSO~1\AppData\Local\Temp\ESET-3012\cfg.xml" /qn
+2013-03-25 19:42:21 : 0026 -- Installation Result [success=0]: 0
+2013-03-25 19:42:21 : 0027 -- Reporting Installation Results in Registry per INTEL IEI (SIL.06 / SIL.07).
+2013-03-25 19:42:21 : 0028 -- Registry key: HKLM64\SOFTWARE\ESET\ESET Security\CurrentVersion\Info
+2013-03-25 19:42:21 : 0029 -- Reporting SUCCESS: $RegWriteResSuccess = 1
+2013-03-25 19:42:21 : 0030 -- Reporting VERSION: v4.0.474.0
+2013-03-25 19:42:21 : 0031 -- Phase1 attempt at deleting wrapper file(s) [C:\Users\ROSSSO~1\AppData\Local\Temp\ESET-3012] (success=1), result = 1
+2013-03-25 19:42:21 : 0032 -- ----------------------------------------------------------Exit code = 1, Exit method = 1
